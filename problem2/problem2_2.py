@@ -51,6 +51,4 @@ if __name__ == '__main__':
     with open('problem2/input2.txt') as input:
         strategy = [line.rstrip("\n") for line in input]
 
-    print(strategy)
-
     print(calculate_score_tournament(strategy=strategy))
