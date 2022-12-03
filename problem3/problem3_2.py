@@ -5,37 +5,44 @@ vals = [i for i in range(1, 53)]
 ALPHABET_VALS = dict(zip(ALPHABET, vals))
 
 
-def find_matching_items(rucksack: str) -> str:
+def find_matching_items(group: list[str]) -> str:
     """
-    The function takes a string "rucksack as input and checks
-    what character of the string is repeated both in the first and 
-    second half of the full string and returns the character.
+    The function takes a list of string which correspon to the three 
+    rucksacks in a elves grop as input and checks
+    what character is repeated in each of the strings in the list.
     """
-
-    half1 = rucksack[:len(rucksack)//2]
-    half2 = rucksack[len(rucksack)//2:]
 
     unique_items = []  # unique items in list 1
-    for item in half1:
+    for item in group[0]:
         if item in unique_items:
             continue
         else:
             unique_items.append(item)
-            if item in half2:
-                return item
+            matched_rucksacks = 0
+            for rucksack in group[1:]:
+                if item not in rucksack:
+                    break
+
+                matched_rucksacks += 1
+                if matched_rucksacks == (len(group)-1):
+                    return item
 
 
-def calculate_sum_of_priorities(rucksacks: list[str]) -> int:
+def calculate_sum_of_priorities(rucksacks: list[str], elves_in_group: int) -> int:
     """
     Given the list of rucksacks, calculare the sum of the priorities of
-    the item types repeated across rucksack halves.
+    the item types repeated across groups.
     """
 
     acc = 0
+    group = []
     for rucksack in rucksacks:
-        matching_item = find_matching_items(rucksack)
-        acc += ALPHABET_VALS[matching_item]
-
+        group.append(rucksack)
+        if len(group) == elves_in_group:
+            matching_item = find_matching_items(group)
+            print(matching_item)
+            acc += ALPHABET_VALS[matching_item]
+            group.clear()
     return acc
 
 
@@ -45,4 +52,7 @@ if __name__ == '__main__':
     with open('problem3/input3.txt') as input:
         rucksacks = [line.rstrip('\n') for line in input]
 
-    print(calculate_sum_of_priorities(rucksacks=rucksacks))
+    test = ['vJrwpWtwJgWrhcsFMMfFFhFp', 'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL', 'PmmdzqPrVvPwwTWBwg',
+            'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn', 'ttgJtRGJQctTZtZT', 'CrZsJsPPZsGzwwsLwLmpwMDw']
+
+    print(calculate_sum_of_priorities(rucksacks, 3))
