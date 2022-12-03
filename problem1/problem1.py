@@ -35,7 +35,7 @@ def calculate_max_total_calories(calories: List[str | int], elves_to_consider: i
 
 if __name__ == '__main__':
 
-    with open('Problem1/input1.txt') as input:
+    with open('problem1/input1.txt') as input:
         calories = [line.rstrip('\n') for line in input]
 
     # Part 1
