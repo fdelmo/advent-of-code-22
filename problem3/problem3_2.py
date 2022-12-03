@@ -40,7 +40,6 @@ def calculate_sum_of_priorities(rucksacks: list[str], elves_in_group: int) -> in
         group.append(rucksack)
         if len(group) == elves_in_group:
             matching_item = find_matching_items(group)
-            print(matching_item)
             acc += ALPHABET_VALS[matching_item]
             group.clear()
     return acc
@@ -51,8 +50,5 @@ if __name__ == '__main__':
     # read file and separate each line
     with open('problem3/input3.txt') as input:
         rucksacks = [line.rstrip('\n') for line in input]
-
-    test = ['vJrwpWtwJgWrhcsFMMfFFhFp', 'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL', 'PmmdzqPrVvPwwTWBwg',
-            'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn', 'ttgJtRGJQctTZtZT', 'CrZsJsPPZsGzwwsLwLmpwMDw']
 
     print(calculate_sum_of_priorities(rucksacks, 3))
