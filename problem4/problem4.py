@@ -69,13 +69,4 @@ if __name__ == '__main__':
     with open('problem4/input4.txt') as input:
         pairs = [line.rstrip('\n') for line in input]
 
-    test = [
-        # '2-4,6-8',
-        # '2-3,4-5',
-        '5-7,7-9',
-        '2-8,3-7',
-        '6-6,4-6',
-        '2-6,4-8'
-    ]
-
     print(count_total_contained_and_overlaped_pairs(pairs=pairs))
