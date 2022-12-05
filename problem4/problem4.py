@@ -1,5 +1,3 @@
-import time
-
 
 def check_if_pair_is_contained(seg1: tuple[int], seg2: tuple[int]) -> bool:
     """
