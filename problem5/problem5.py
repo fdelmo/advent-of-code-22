@@ -39,26 +39,34 @@ def orders_to_tuple(order: str) -> tuple[int]:
     return tuple([int(str) for str in separated if str.isdigit()])
 
 
-def move_crates(crates: list[list[str]], orders: list[str]) -> list[list[str]]:
+def move_crates(input: list[list[str]], orders: list[str], one_at_a_time: bool = True) -> list[list[str]]:
     """
     Given the initial crates setup and the orders, perform the permutations and
     return the final crate state.
     """
+    crates = input[:]
+
     for line in orders:
         order = orders_to_tuple(line)
-        print(order)
 
-        for moves in range(order[0]):
-            crate_moved = crates[order[1]-1].pop()
-            crates[order[2]-1].append(crate_moved)
+        if one_at_a_time:
+            for moves in range(order[0]):
+                crate_moved = crates[order[1]-1].pop()
+                crates[order[2]-1].append(crate_moved)
+
+        else:
+            multiple_crates_moved = crates[order[1]-1][-order[0]:]
+            crates[order[1]-1] = crates[order[1]-1][:-order[0]]
+            crates[order[2]-1] = crates[order[2]-1] + multiple_crates_moved
 
     return crates
 
 
-def get_top_crates(crates: list[list[str]]) -> str:
+def get_top_crates(input: list[list[str]]) -> str:
     """
     Given the crates setup, return the leters of the crates on top of each stack.
     """
+    crates = input[:]
     top = ''
     for stack in crates:
         for i in range(1, len(stack)+1):
@@ -87,9 +95,14 @@ if __name__ == '__main__':
     with open('problem5/input5.txt') as input:
         lines = [line.rstrip('\n') for line in input]
 
-    crates, orders = get_cartes_and_orders(lines, 8)
+    crates_initial, orders = get_cartes_and_orders(lines, 8)
 
-    final_crates = move_crates(crates, orders)
+    final_crates = move_crates(crates_initial, orders)
 
-    print(final_crates)
-    print(get_top_crates(final_crates))
+    print(f"Part 1: {get_top_crates(final_crates)}")
+
+    crates_initial, orders = get_cartes_and_orders(lines, 8)
+
+    final_crates_multiple = move_crates(
+        crates_initial, orders, one_at_a_time=False)
+    print(f"Part 2: {get_top_crates(final_crates_multiple)}")
