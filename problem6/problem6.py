@@ -20,4 +20,7 @@ if __name__ == '__main__':
     with open('problem6/input6.txt', 'r') as input:
         streams = [line.rstrip('\n') for line in input]
 
-    print(detect_start_of_packet_position(stream=streams[0], packet_len=4))
+    print(
+        f"Start-of-packet marker at position: {detect_start_of_packet_position(stream=streams[0], packet_len=4)}")
+    print(
+        f"Start-of-message marker at position: {detect_start_of_packet_position(stream=streams[0], packet_len=14)}")
