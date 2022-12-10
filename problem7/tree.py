@@ -42,3 +42,8 @@ class Node(object):
             acc += kid.get_size()
 
         return acc
+
+
+if __name__ == '__main__':
+    node = Node('hello', 'dir')
+    print(node.name)
